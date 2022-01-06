@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="fontawesome/css/all.css">
+        <script type="text/javascript">
+             var xhr = new XMLHttpRequest();
+             var data=[];
+
+
+             function getTousPFE(){
+              xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfes.php", true);
+              xhr.send();
+               xhr.onreadystatechange = function () {
+               if (xhr.readyState == 4 && xhr.status == 200) {
+                  data=xhr.responseXML;
+                   afficher(data);}
+                   }
+            }
+
+            function getPFEreseau(){
+              xhr.open("GET", " http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=reseaux ", true);
+              xhr.send();
+               xhr.onreadystatechange = function () {
+               if (xhr.readyState == 4 && xhr.status == 200) {
+                  data=xhr.responseXML;
+                   afficher(data);}
+                   }
+            }
+
+            function getPFEtelecom(){
+              xhr.open("GET", "  http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=Telecom", true);
+              xhr.send();
+               xhr.onreadystatechange = function () {
+               if (xhr.readyState == 4 && xhr.status == 200) {
+                  data=xhr.responseXML;
+                   afficher(data);}
+                   }
+            }
+
+            function getPFEdeveloppement(){
+              xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=Developpement ", true);
+              xhr.send();
+               xhr.onreadystatechange = function () {
+               if (xhr.readyState == 4 && xhr.status == 200) {
+                  data=xhr.responseXML;
+                   afficher(data);}
+                   }
+            }
+
+            function getPFEembarque_iot(){
+              xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=Embarques et IoT", true);
+              xhr.send();
+               xhr.onreadystatechange = function () {
+               if (xhr.readyState == 4 && xhr.status == 200) {
+                  data=xhr.responseXML;
+                   afficher(data);}
+                   }
+            }
+
+
+
+
+
+            function afficher(){
+             var tab=document.getElementById("pf");
+             tab.innerHTML="<tr><th>ID</th><th>Titre</th><th>Type</th></tr>";
+             var projet=data.getElementsByTagName("pfe");
+
+            for (var i=0;i<projet.length;i++){
+               var tr=document.createElement("tr");
+
+               var td1=document.createElement("td");
+               var c1=document.createTextNode(projet[i]["id"]);
+               td1.appendChild(c1);
+               tr.appendChild(td1);      
+               var td2=document.createElement("td");
+               td2.innerHTML = projet[i].getAttribute('titre');
+
+               tr.appendChild(td2);
+
+                    
+               var td3=document.createElement("td");
+               td3.innerHTML = projet[i].getAttribute('type');
+               tr.appendChild(td3);
+
+               tab.append(tr);
+               }
+
+            }
+        
+
+
+
+        </script>
+    </head>
+<body onload="getTousPFE()">
+    <div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary  text-white" >
+          <h2>Catalogue des PFEs (ESSAT)</h2>
+        </div>
+        <div class="row mt-1">
+            <div class="col-3">
+                <div class="btn-group-vertical">
+                    <button type="submit" class="btn btn-primary" onclick="getTousPFE();"><span class="fa fa-th-large "></span>&nbsp; Tous les PFEs&nbsp;<span class="badge badge-warning badge-pill">13</span></button>
+                    <button type="submit" class="btn btn-light" onclick="getPFEtelecom();" ><span class="fa fa-th-large "></span>&nbsp; PFEs Télecom&nbsp;<span class="badge badge-info badge-pill">3</span></button>
+                    <button type="submit" class="btn btn-light" onclick="getPFEdeveloppement();"  ><span class="fa fa-th-large "></span>&nbsp; PFEs Développement&nbsp;<span class="badge badge-info badge-pill">4</span></button>
+                    <button type="submit" class="btn btn-light" onclick="getPFEreseau();" ><span class="fa fa-th-large "></span>&nbsp; PFEs Réseaux&nbsp;<span class="badge badge-info badge-pill">3</span></button>
+                    <button type="submit" class="btn btn-light" onclick="getPFEembarque_iot();"  ><span class="fa fa-th-large "></span>&nbsp; PFEs Embarqués et IoT&nbsp;<span class="badge badge-info badge-pill">3</span></button>
+                </div>
+        </div>
+        <div class="col-9 mt-1">
+            <div class="card text.light ">
+                <div class="card-body">
+
+                    <table class="table"> 
+                        <div class="thead bg-success text-white" style="padding: 20px; "> Liste des PFEs  </div>
+
+                        <tbody id="pf">
+   
+                            </tbody>
+                        </table>
+                            
+                    </div>
+        </div>
+        </div>
+        </div>
+
+
+
+
+
+
+    </body>
+    </html>
